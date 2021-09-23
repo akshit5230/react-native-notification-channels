@@ -17,14 +17,15 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
 
   @ReactMethod
   fun listChannels(promise: Promise) {
-    val channels: MutableList<String> = ArrayList()
+//    val channels: MutableList<String> = ArrayList()
+    var channels = WritableNativeArray()
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-      promise.resolve(channels)
+      promise.resolve(null)
       return
     }
     val listChannels: List<NotificationChannel> = notificationManager.notificationChannels
     for (channel in listChannels) {
-      channels.add(channel.id)
+      channels.pushString(channel.id)
     }
     promise.resolve(channels)
   }
