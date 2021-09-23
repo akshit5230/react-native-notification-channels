@@ -3,6 +3,7 @@ package com.reactnativenotificationchannels
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
 import com.facebook.react.bridge.*
 
 class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
@@ -17,6 +18,10 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
   @ReactMethod
   fun listChannels(promise: Promise) {
     val channels: MutableList<String> = ArrayList()
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+      promise.resolve(channels)
+      return
+    }
     val listChannels: List<NotificationChannel> = notificationManager.notificationChannels
     for (channel in listChannels) {
       channels.add(channel.id)
@@ -25,21 +30,36 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
   }
 
   fun channelBlocked(channel_id: String?, promise: Promise) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+      promise.resolve(null)
+      return
+    }
     val channel = notificationManager.getNotificationChannel(channel_id)
     promise.resolve(NotificationManager.IMPORTANCE_NONE == channel.importance)
   }
 
   fun channelExists(channel_id: String?, promise: Promise) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+      promise.resolve(null)
+      return
+    }
     val channel = notificationManager.getNotificationChannel(channel_id)
     promise.resolve(channel != null)
   }
 
   fun deleteChannel(channel_id: String?,promise: Promise) {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+      promise.resolve(null)
+      return
+    }
     notificationManager.deleteNotificationChannel(channel_id)
     promise.resolve("Channel Deleted")
   }
 
   private fun checkOrCreateChannel(channel_id: String?, channel_name: String?, channel_description: String?, importance: Int): Boolean {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+      return false
+    }
     var channel = notificationManager.getNotificationChannel(channel_id)
     if (channel == null && channel_name != null && channel_description != null ||
       channel != null &&
