@@ -1,13 +1,25 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import NotificationChannels from 'react-native-notification-channels';
+import NotificationChannels, {
+  CHANNEL_IMPORTANCE,
+} from 'react-native-notification-channels';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [result, setResult] = React.useState<string | undefined>();
 
+  async function configChannels() {
+    const channelCreated = await NotificationChannels.createChannel({
+      channelId: 'your_channel_id',
+      channelName: 'Important Notifications',
+      channelDescription: 'These channel will receive important notifications',
+      importance: CHANNEL_IMPORTANCE.IMPORTANCE_HIGH,
+    });
+
+    setResult(channelCreated ? 'Channel created' : 'Failed to create Channel');
+  }
   React.useEffect(() => {
-    NotificationChannels.multiply(3, 7).then(setResult);
+    configChannels();
   }, []);
 
   return (
