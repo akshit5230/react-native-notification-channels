@@ -30,6 +30,7 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
     promise.resolve(channels)
   }
 
+  @ReactMethod
   fun channelBlocked(channel_id: String?, promise: Promise) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
       promise.resolve(null)
@@ -39,6 +40,7 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
     promise.resolve(NotificationManager.IMPORTANCE_NONE == channel.importance)
   }
 
+  @ReactMethod
   fun channelExists(channel_id: String?, promise: Promise) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
       promise.resolve(null)
@@ -48,6 +50,7 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
     promise.resolve(channel != null)
   }
 
+  @ReactMethod
   fun deleteChannel(channel_id: String?,promise: Promise) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
       promise.resolve(null)
@@ -90,6 +93,7 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
     return false
   }
 
+  @ReactMethod
   fun createChannel(channelInfo: ReadableMap, promise: Promise) {
     val channelId = channelInfo.getString("channelId")
     val channelName = channelInfo.getString("channelName")
