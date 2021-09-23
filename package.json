@@ -11,12 +11,9 @@
     "src",
     "lib",
     "android",
-    "ios",
     "cpp",
-    "react-native-notification-channels.podspec",
     "!lib/typescript/example",
     "!android/build",
-    "!ios/build",
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__"
@@ -33,8 +30,9 @@
   },
   "keywords": [
     "react-native",
-    "ios",
-    "android"
+    "android",
+    "notification",
+    "channel"
   ],
   "repository": "https://github.com/akshit5230/react-native-notification-channels",
   "author": "Akshit W <myfanakki@gmail.com> (https://github.com/akshit5230)",
