@@ -1,4 +1,4 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 
 export enum CHANNEL_IMPORTANCE {
   IMPORTANCE_DEFAULT = 3,
@@ -15,13 +15,26 @@ type ChannelInfoType = {
 };
 
 type NotificationChannelsType = {
-  listChannels(): Promise<string[]>;
-  channelBlocked(channel_id: string): Promise<boolean>;
-  channelExists(channel_id: string): Promise<boolean>;
-  deleteChannel(channel_id: string): Promise<boolean>;
-  createChannel(channelInfo: ChannelInfoType): Promise<boolean>;
+  listChannels(): Promise<string[] | undefined>;
+  channelBlocked(channel_id: string): Promise<boolean | undefined>;
+  channelExists(channel_id: string): Promise<boolean | undefined>;
+  deleteChannel(channel_id: string): Promise<boolean | undefined>;
+  createChannel(channelInfo: ChannelInfoType): Promise<boolean | undefined>;
 };
 
 const { NotificationChannels } = NativeModules;
 
-export default NotificationChannels as NotificationChannelsType;
+let NotifChannels = NotificationChannels;
+
+if (Platform.OS === 'ios') {
+  const iOSNotifChannels: NotificationChannelsType = {
+    listChannels: async () => Promise.resolve(undefined),
+    channelBlocked: async () => Promise.resolve(undefined),
+    channelExists: async () => Promise.resolve(undefined),
+    deleteChannel: async () => Promise.resolve(undefined),
+    createChannel: async () => Promise.resolve(undefined),
+  };
+  NotifChannels = iOSNotifChannels;
+}
+
+export default NotifChannels as NotificationChannelsType;
