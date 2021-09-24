@@ -89,6 +89,16 @@ Deletes a channel with given id, if exists, and returns a boolean
 
 Read more here: https://developer.android.com/training/notify-user/channels
 
+## Motivation
+
+The @react-native-firebase/messaging library provided a way to create channels in their older versions but they dropped it and refer to another library called Notifee which is paid and have great many features for notifications.
+
+Also, there is another library react-native-push-notification which does provide these features but if you use rn-firebase, then this library is a bit heavy to add if you just need something to handle channel management on android.
+
+And of course channel management is a crucial task because the default channel created by rn-firebase, has a weird name "Miscellaneous" and also it has "sound" disabled by default so unless the user enables sound and vibration by going to notification settings, it just doesn't work if you need them to make a sound. 
+
+Of course, you can add some metadata about the channel in the manifest and change the channel config, but still, if you need to handle multiple channels, this is a good lightweight package for you.
+
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
