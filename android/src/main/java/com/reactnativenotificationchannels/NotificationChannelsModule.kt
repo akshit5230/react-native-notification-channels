@@ -2,12 +2,12 @@ package com.reactnativenotificationchannels
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.NotificationChannelGroup
 import android.content.Context
 import android.os.Build
 import com.facebook.react.bridge.*
 
 class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
-
 
   private val notificationManager: NotificationManager = reactContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -107,5 +107,11 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
     promise.resolve(checkOrCreateChannel(channelId, channelName, channelDescription, importance))
   }
 
+  @ReactMethod
+  fun createChannelGroup(groupName: String?, promise: Promise) {
+    // The id of the group.
+    val groupId = groupName.toLowerCase().replace(" ", "_")
+    promise.resolve(notificationManager.createNotificationChannelGroup(NotificationChannelGroup(groupId, groupName)))
+  }
 
 }

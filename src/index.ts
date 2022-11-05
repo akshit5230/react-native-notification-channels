@@ -20,6 +20,7 @@ type NotificationChannelsType = {
   channelExists(channel_id: string): Promise<boolean | undefined>;
   deleteChannel(channel_id: string): Promise<boolean | undefined>;
   createChannel(channelInfo: ChannelInfoType): Promise<boolean | undefined>;
+  createChannelGroup(group_name: string): Promise<boolean | undefined>;
 };
 
 const { NotificationChannels } = NativeModules;
@@ -33,6 +34,7 @@ if (Platform.OS === 'ios') {
     channelExists: async () => Promise.resolve(undefined),
     deleteChannel: async () => Promise.resolve(undefined),
     createChannel: async () => Promise.resolve(undefined),
+    createChannelGroup: async () => Promise.resolve(undefined)
   };
   NotifChannels = iOSNotifChannels;
 }
