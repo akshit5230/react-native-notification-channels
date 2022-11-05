@@ -60,7 +60,7 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
     promise.resolve("Channel Deleted")
   }
 
-  private fun checkOrCreateChannel(channel_id: String?, channel_name: String?, channel_description: String?, importance: Int): Boolean {
+  private fun checkOrCreateChannel(channel_id: String?, channel_name: String?, channel_description: String?, importance: Int, groupId: String?): Boolean {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
       return false
     }
@@ -87,6 +87,9 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
 //            } else {
 //                channel.setSound(null, null);
 //            }
+      if (groupId) {
+        channel.setGroup(groupId)
+      }
       notificationManager.createNotificationChannel(channel)
       return true
     }
@@ -104,13 +107,12 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
     //        boolean vibrate = channelInfo.hasKey("vibrate") && channelInfo.getBoolean("vibrate");
 //        long[] vibratePattern = vibrate ? new long[] { 0, DEFAULT_VIBRATION } : null;
 //        Uri soundUri = playSound ? getSoundUri(soundName) : null;
-    promise.resolve(checkOrCreateChannel(channelId, channelName, channelDescription, importance))
+    val groupId = if (channelInfo.hasKey("groupId")) channelInfo.getString("groupId") else null
+    promise.resolve(checkOrCreateChannel(channelId, channelName, channelDescription, importance, groupId))
   }
 
   @ReactMethod
-  fun createChannelGroup(groupName: String?, promise: Promise) {
-    // The id of the group.
-    val groupId = groupName.toLowerCase().replace(" ", "_")
+  fun createChannelGroup(groupId: String?, groupName: String?, promise: Promise) {
     promise.resolve(notificationManager.createNotificationChannelGroup(NotificationChannelGroup(groupId, groupName)))
   }
 

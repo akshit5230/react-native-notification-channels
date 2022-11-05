@@ -12,6 +12,7 @@ type ChannelInfoType = {
   channelName: string;
   channelDescription: string;
   importance: CHANNEL_IMPORTANCE;
+  groupId?: string;
 };
 
 type NotificationChannelsType = {
@@ -20,7 +21,7 @@ type NotificationChannelsType = {
   channelExists(channel_id: string): Promise<boolean | undefined>;
   deleteChannel(channel_id: string): Promise<boolean | undefined>;
   createChannel(channelInfo: ChannelInfoType): Promise<boolean | undefined>;
-  createChannelGroup(groupName: string): Promise<boolean | undefined>;
+  createChannelGroup(groupId:string, groupName: string): Promise<boolean | undefined>;
 };
 
 const { NotificationChannels } = NativeModules;

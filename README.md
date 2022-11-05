@@ -26,7 +26,8 @@ async function configChannels() {
     channelId: 'my_new_channel',
     channelName: 'Important Notifications',
     channelDescription: 'A notification channel which will receive all the important notifications from this app',
-    importance: CHANNEL_IMPORTANCE.IMPORTANCE_HIGH
+    importance: CHANNEL_IMPORTANCE.IMPORTANCE_HIGH,
+    groupId: 'my_group' // optional
   })
   console.log(channelCreated ? "Channel created" : "Failed to create channel")
 }
