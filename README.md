@@ -78,6 +78,10 @@ Returns a boolean true if a channel with provided id already exists, otherwise f
 
 Deletes a channel with given id, if exists, and returns a boolean
 
+### createChannelGroup(groupName)
+
+Creates groups for all your channels to be sorted within, with given name, and returns a boolean
+
 ## Channel Importance
 
 | importance  | sound | vibrate | status bar | drawer | heads up |
