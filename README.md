@@ -53,6 +53,7 @@ Pass an object of following properties:
 | channelName  | a name to display in app notification settings  | 'Reminders' |
 | channelDescription  | a description to display in app notification settings  | 'This channel will receive blah blah blah...' |
 | importance  | to set importance level of channel notifications  | see below for details |
+| groupId  | a unique id for a group (that was already created using createChannelGroup method), if you want to associate the group with the channel  | 'my_new_group' |
 
 ### listChannels()
 
