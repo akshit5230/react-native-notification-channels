@@ -87,8 +87,8 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
 //            } else {
 //                channel.setSound(null, null);
 //            }
-      if (groupId) {
-        channel.setGroup(groupId)
+      if (groupId != null) {
+        channel.group = groupId
       }
       notificationManager.createNotificationChannel(channel)
       return true
@@ -113,7 +113,12 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
 
   @ReactMethod
   fun createChannelGroup(groupId: String?, groupName: String?, promise: Promise) {
-    promise.resolve(notificationManager.createNotificationChannelGroup(NotificationChannelGroup(groupId, groupName)))
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+      promise.resolve(null)
+      return
+    }
+    notificationManager.createNotificationChannelGroup(NotificationChannelGroup(groupId, groupName))
+    promise.resolve(true)
   }
 
 }
