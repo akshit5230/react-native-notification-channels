@@ -6,6 +6,10 @@ iOS  | Android
 ------------- | -------------
 ❌ | ✅
 
+![Screenshot_1669532032](https://user-images.githubusercontent.com/43376244/204123232-3514e6f2-a0e9-47c7-ac54-c200969d0513.jpg)
+![Screenshot_1669532041](https://user-images.githubusercontent.com/43376244/204123233-74699229-1839-4eeb-9ee5-20499c71a9de.jpg)
+
+
 ## Installation
 
 ```sh
@@ -22,12 +26,27 @@ import NotificationChannels, {
 // ...
 
 async function configChannels() {
+
+  let channelExists = await NotificationChannels.channelExists('my_new_channel')
+  if (channelExists) {
+    NotificationChannels.deleteChannel('my_new_channel')
+    console.log('my_new_channel was deleted')
+  }
+  
+  const list = await NotificationChannels.listChannels()
+  console.log('channel list:', list)
+
+  const groupCreated = await NotificationChannels.createChannelGroup(
+    'my_new_group', 'Personal Only'
+  )
+  console.log('groupCreated', groupCreated)
+  
   const channelCreated = await NotificationChannels.createChannel({
     channelId: 'my_new_channel',
     channelName: 'Important Notifications',
     channelDescription: 'A notification channel which will receive all the important notifications from this app',
     importance: CHANNEL_IMPORTANCE.IMPORTANCE_HIGH,
-    groupId: 'my_group' // optional
+    groupId: 'my_new_group' // optional
   })
   console.log(channelCreated ? "Channel created" : "Failed to create channel")
 }
