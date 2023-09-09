@@ -26,6 +26,7 @@ def getExtOrIntegerDefault(name) {
 }
 
 android {
+  namespace = "com.reactnativenotificationchannels"
   compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
   buildToolsVersion getExtOrDefault('buildToolsVersion')
   defaultConfig {

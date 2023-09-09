@@ -1,6 +1,6 @@
 {
   "name": "react-native-notification-channels",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A package for react-native consisting of native android helper functions to create Notification channels.",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
